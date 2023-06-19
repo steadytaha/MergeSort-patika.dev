@@ -1,0 +1,78 @@
+public class MergeSort {
+    
+    //Method to merge two subarrays of array[]
+    void merge(int array[], int l, int m, int r) {
+        int n1 = m - l + 1;
+        int n2 = r - m;
+        //Create temporary arrays
+        int L[] = new int[n1];
+        int R[] = new int[n2];
+        //Copy data to temporary arrays
+        for (int i = 0; i < n1; ++i)
+            L[i] = array[l + i];
+        for (int j = 0; j < n2; ++j)
+            R[j] = array[m + 1 + j];
+        // Merge the temporary arrays
+        int i = 0, j = 0;
+        int k = l;
+        while (i < n1 && j < n2) {
+            if (L[i] <= R[j]) {
+                array[k] = L[i];
+                i++;
+            }
+            else {
+                array[k] = R[j];
+                j++;
+            }
+            k++;
+        }
+        // Copy the remaining elements of L[], if any
+        while (i < n1) {
+            array[k] = L[i];
+            i++;
+            k++;
+        }
+        // Copy the remaining elements of R[], if any
+        while (j < n2) {
+            array[k] = R[j];
+            j++;
+            k++;
+        }
+    }
+    
+    //Main method that sorts array[l..r] using merge()
+    void sort(int array[], int l, int r) {
+        if (l < r) {
+            int m = (l + r) / 2;
+            // Sort first and second halves
+            sort(array, l, m);
+            sort(array, m + 1, r);
+            // Merge the sorted halves
+            merge(array, l, m, r);
+        }
+    }
+    
+    //Method to print array
+    public static void printArray(int array[]) {
+        int n = array.length;
+        System.out.print("[");
+        for (int i = 0; i < n; ++i) {
+            if (i != n-1) {
+                System.out.print(array[i] + ", ");
+            } else {
+                System.out.print(array[i]);
+            }
+        }
+        System.out.print("]");
+    }
+    
+    //Main driver method to test above methods.
+    public static void main(String[] args) {
+        int array[] = {16,21,11,8,12,22};
+        MergeSort ob = new MergeSort();
+        ob.sort(array, 0, array.length - 1);
+        System.out.println("Sorted array: ");
+        printArray(array);
+    }
+}
+
